@@ -29,3 +29,24 @@
   img {
     max-width: 100%;
   }
+  .width50 {
+    width: 50%;
+  }
+  ul {
+    list-style-type: none;
+  }
+  .overlay {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    color: #fff;
+    background-color: #000;
+  }
+  .overlay-content {
+    background-color: #000;
+  }
+  .overlay-content .row {
+    display: flex;
+  }

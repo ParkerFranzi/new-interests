@@ -2,17 +2,6 @@ const tastediveAPI = '339797-FindNewI-4PDNXAAE';
 const newsAPI = '3529a7c1a7d54e3587f38460b8114c9a';
 const youtubeAPI = 'AIzaSyA4b9Rx0m_NZPQEbVMa31ZIzbsieueLXhE';
 
-/*  Getting text string to query form    
-function test() {
-  $('.test').click(function(){
-    event.preventDefault();
-    let test = $(this).text();
-    var replaced = test.split(' ').join('+');
-    console.log(replaced);
-  })
-}
-*/
-
 'use strict';
 
 // TasteDive
@@ -37,15 +26,34 @@ function displayTasteDive(json) {
   $('#news-list').empty();
   for (let i = 0; i < json.Similar.Results.length; i++){
     $('#results-list').append(
-      `<li><h3 class="name">${json.Similar.Results[i].Name}</h3>
-      <p>Type: ${json.Similar.Results[i].Type}</p>
-      <p>Description: ${json.Similar.Results[i].wTeaser}</p>
+      `<li><h3 class="name"><a href="#more-info">${json.Similar.Results[i].Name}</a></h3>
+      <p class="taste-type">Type: ${json.Similar.Results[i].Type}</p>
+      <p class="taste-description">Description: ${json.Similar.Results[i].wTeaser}</p>
+      <p class="taste-wikiurl hidden">Visit the Wiki: <a href="${json.Similar.Results[i].wUrl}">${json.Similar.Results[i].wUrl}</a></p>
       </li>`
     )};
   //display the results section  
   $('#results').removeClass('hidden');
 };
 
+function displayTasteDiveNotFound(json) {
+  $('#results-list').empty();
+  $('#youtube-list').empty();
+  $('#news-list').empty();
+  $('#results-list').append(
+    `<h3 class="name">${json.Similar.Info[0].Name} is unknown, please try again</h3>`
+  );
+  $('#results').removeClass('hidden');
+}
+function displayTasteDiveNoResults(json) {
+  $('#results-list').empty();
+  $('#youtube-list').empty();
+  $('#news-list').empty();
+  $('#results-list').append(
+    `<h3 class="name">${json.Similar.Info[0].Name} has no results, please try another search</h3>`
+  );
+  $('#results').removeClass('hidden');
+}
 function getSimilar(query, limit=10, info=1) {
   const params = {
     k: tastediveAPI,
@@ -59,24 +67,25 @@ function getSimilar(query, limit=10, info=1) {
   console.log(tasteURL);
 
   const makeAjaxRequest = () => {
-    window.handleRequest = x => displayTasteDive(x);
+    window.handleRequest = x => {
+      console.log(x.Similar.Info[0].Type);
+      if (x.Similar.Info[0].Type === "unknown") {
+        displayTasteDiveNotFound(x);
+      }
+      else if (x.Similar.Results.length === 0) {
+        displayTasteDiveNoResults(x);
+      }
+      else {
+        displayTasteDive(x);
+      }
+    }
+    
     const tag = document.createElement("script");
     tag.src = tasteURL;
     document.getElementsByTagName("head")[0].appendChild(tag);
   };
   makeAjaxRequest();
 
-  /*fetch(url, {headers:myHeaders})
-    .then(response => {
-      if (response.ok) {
-        return response.json();
-      }
-      throw new Error(response.statusText);
-    })
-    .then(responseJson => console.log(responseJson))
-    .catch(err => {
-      $('#js-error-message').text(`Something went wrong: ${err.message}`);
-    });*/
 }
 
 function watchForm() {
@@ -90,15 +99,9 @@ function watchForm() {
 
 //YouTube
 function displayYouTube(youtubeResponse) {
-  // if there are previous results, remove them
   console.log(youtubeResponse);
   $('#youtube-list').empty();
-  // iterate through the items array
   for (let i = 0; i < youtubeResponse.items.length; i++){
-    // for each video object in the items 
-    //array, add a list item to the results 
-    //list with the video title, description,
-    //and thumbnail
     $('#youtube-list').append(
       `<li><h3>${youtubeResponse.items[i].snippet.title}</h3>
       <p>${youtubeResponse.items[i].snippet.description}</p>
@@ -106,7 +109,7 @@ function displayYouTube(youtubeResponse) {
       </li>`
     )};
   //display the results section  
-  $('#results').removeClass('hidden');
+  $('#more-info').removeClass('hidden');
 };
 
 function getYouTubeVideos(query, maxResults=10) {
@@ -134,15 +137,6 @@ function getYouTubeVideos(query, maxResults=10) {
       $('#js-error-message').text(`Something went wrong: ${err.message}`);
     });
 }
-
-function watchTasteResults() {
-  $('#results-list').on('click', '.name', function(event) {
-    const tasteName = $(this).text();
-    const maxResults = $('#js-max-results').val();
-    getYouTubeVideos(tasteName, maxResults);
-  });
-}
-
 //News API
 function displayNews(newsResponse) {
   console.log(newsResponse);
@@ -156,15 +150,15 @@ function displayNews(newsResponse) {
       <p>${newsResponse.articles[i].description}</p>
       </li>`
     )};
-  //display the results section  
-  $('#results').removeClass('hidden');
+  $('#more-info').removeClass('hidden');
 };
 
 function getNews(query, maxResults=10) {
   const params = {
     apiKey: newsAPI,
     q: query,
-    length: maxResults,
+    sortBy: 'relevancy',
+    pageSize: maxResults,
   };
   const newsQuery = formatQueryParams(params);
   const newsURL = newsBase + '?' + newsQuery;
@@ -188,10 +182,48 @@ function watchTasteResults() {
   $('#results-list').on('click', '.name', function(event) {
     const tasteName = $(this).text();
     const maxResults = $('#js-max-results').val();
+    const tasteType = $(this).parent().find('.taste-type').text();
+    const tasteDesc = $(this).parent().find('.taste-description').text();
+    const tasteWURL = $(this).parent().find('.taste-wikiurl').text();
     getYouTubeVideos(tasteName, maxResults);
-    getNews(tasteName, maxResults)
+    getNews(tasteName, maxResults);
+    moreDescription(tasteType, tasteName, tasteDesc, tasteWURL);
   });
 }
-$(watchForm);
-$(watchTasteResults);
+
+function moreDescription(type, name, desc, wurl) {
+  $('#more-description').empty();
+  $('#more-description').append(
+    `<h2 class="moreName">${name}</h2>
+    <h3 class="moreType">${type}</h3>
+    <p class="moreDesc">${desc}</p>
+    <p class="moreUrl"><a href="${wurl}">Learn more on Wikipedia</a></p>
+    `
+  );
+  $('#more-description').removeClass('hidden');
+}
+function howToUse() {
+  $('#how-to-use').on('click', function(event){
+    event.preventDefault();
+    $('#instructions').removeClass('hidden');
+  })
+}
+//Close Modals
+function closeModal() {
+  $('.close-modal').on('click', function(event) {
+    event.preventDefault();
+    $('#instructions').addClass('hidden');
+    $('#more-info').addClass('hidden');
+  })
+}
+
+//Functions to run
+function runStart() {
+  watchForm();
+  watchTasteResults();
+  closeModal();
+  howToUse();
+}
+$(runStart);
+
 
