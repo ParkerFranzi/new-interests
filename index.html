@@ -23,15 +23,16 @@
         <div class="overlay-content container">
             <a class="close-modal" href="JavaScript:void(0);" aria-roledescription="close modal">X</a>
             <h2>How to use</h2>
-            <p>Enter your favorite author, game, book, movie, podcast, or show.  You can enter in multiple at the same time seperated by a comma(,).  If one thing shares a title between different types you can also specify type by adding in the type followed by a colon before your search term ex. show:Game of Thrones</p>
+            <p>Enter your favorite author, game, book, movie, podcast, or show.  You can enter in multiple at the same time seperated by a comma.  If one thing shares a title between different types you can also specify type by adding in the type followed by a colon before your search term ex. show:Game of Thrones</p>
             <p>Once you've got your results, click on the name and you'll see some related news articles and YouTube videos to learn more about them!</p>
         </div>
     </section>
     <section id="taste-search">   
         <div class="container">
-            <h1>New Interests</h1>
+            <h1>Find New Interests</h1>
+            <p>Using your favorite author, book, movie, game, tv show, or podcast, we'll give you a list of similar things to explore!</p>
             <form id="js-form">
-                <label for="search-term">Enter your favorite author, book, movie, game, tv show, podcast</label>
+                <label for="search-term">Enter your favorite author, book, movie, game, tv show, or podcast</label>
                 <input type="text" name="search-term" id="js-search-term" required>
 
                 <label for="max-results">Maximum results to return</label>
@@ -44,23 +45,25 @@
         </div>
     </section>
     <section id="results" class="hidden">
-        <h2>Search results</h2>
-        <ul id="results-list">
-        </ul>
+        <div class="container">
+            <h2>Search results</h2>
+            <ul id="results-list">
+            </ul>
+        </div>
     </section>
     <section id="more-info" class="hidden overlay">
         <div class="overlay-content">
-            <a class="close-modal" href="JavaScript:void(0);" aria-roledescription="close modal">X</a>
-            <div id="more-description">
-            </div>
-            <div class="row">
-                <div class="width50">
+            <div class="container">
+                <a class="close-modal button" href="JavaScript:void(0);" aria-roledescription="close modal">Back to Search</a>
+                <div id="more-description">
+                </div>
+                <div class="row">
                     <h2>YouTube Videos</h2>
                     <ul id="youtube-list">
                     </ul>
                 </div>
-                <div class="width50">
-                    <h2>Most Recent News</h2>
+                <div class="row">
+                    <h2>Relevant News</h2>
                     <ul id="news-list">
                     </ul>
                 </div>

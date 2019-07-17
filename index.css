@@ -4,6 +4,7 @@
   
   body {
     font-family: 'Roboto', sans-serif;
+    background-color: #eee;
   }
   
   button, input[type="text"] {
@@ -15,12 +16,14 @@
   }
   
   .container {
-    max-width: 600px;
+    max-width: 1200px;
     margin: 0 auto;
+    background-color: #fff;
+    padding: 15px;
   }
   
   .error-message {
-      color: red;
+    color: red;
   }
   
   .hidden {
@@ -29,11 +32,12 @@
   img {
     max-width: 100%;
   }
-  .width50 {
-    width: 50%;
+  .overlay-content img {
+    max-height: 180px;
   }
   ul {
     list-style-type: none;
+    padding: 0;
   }
   .overlay {
     position: absolute;
@@ -41,12 +45,21 @@
     bottom: 0;
     left: 0;
     right: 0;
-    color: #fff;
-    background-color: #000;
+    color: #000;
+    background-color: #eee;
   }
-  .overlay-content {
-    background-color: #000;
+  #results-list li {
+    width: 33%;
+    display: inline-block;
+    vertical-align: top;
+    padding: 10px;
   }
-  .overlay-content .row {
-    display: flex;
+  #youtube-list li, #news-list li {
+    width: 33%;
+    display: inline-block;
+    vertical-align: top;
+    padding: 10px;
+  }
+  .taste-description {
+    display: none;
   }

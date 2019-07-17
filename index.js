@@ -26,7 +26,7 @@ function displayTasteDive(json) {
   $('#news-list').empty();
   for (let i = 0; i < json.Similar.Results.length; i++){
     $('#results-list').append(
-      `<li><h3 class="name"><a href="#more-info">${json.Similar.Results[i].Name}</a></h3>
+      `<li><h3 class="name"><a href="JavaScript:void(0);">${json.Similar.Results[i].Name}</a></h3>
       <p class="taste-type">Type: ${json.Similar.Results[i].Type}</p>
       <p class="taste-description">Description: ${json.Similar.Results[i].wTeaser}</p>
       <p class="taste-wikiurl hidden">Visit the Wiki: <a href="${json.Similar.Results[i].wUrl}">${json.Similar.Results[i].wUrl}</a></p>
@@ -103,11 +103,12 @@ function displayYouTube(youtubeResponse) {
   $('#youtube-list').empty();
   for (let i = 0; i < youtubeResponse.items.length; i++){
     $('#youtube-list').append(
-      `<li><h3>${youtubeResponse.items[i].snippet.title}</h3>
+      `<li><a target="_blank" href='https://www.youtube.com/watch?v=${youtubeResponse.items[i].id.videoId}'><img src='${youtubeResponse.items[i].snippet.thumbnails.medium.url}'></a>
+      <a target="_blank" href='https://www.youtube.com/watch?v=${youtubeResponse.items[i].id.videoId}'><h3>${youtubeResponse.items[i].snippet.title}</a></h3>
       <p>${youtubeResponse.items[i].snippet.description}</p>
-      <img src='${youtubeResponse.items[i].snippet.thumbnails.default.url}'>
       </li>`
     )};
+    //<iframe src='https://www.youtube.com/watch?v=${youtubeResponse.items[i].id.videoId}' width="420" height="315"></iframe>
   //display the results section  
   $('#more-info').removeClass('hidden');
 };
@@ -193,6 +194,7 @@ function watchTasteResults() {
 
 function moreDescription(type, name, desc, wurl) {
   $('#more-description').empty();
+  $(window).scrollTop(0);
   $('#more-description').append(
     `<h2 class="moreName">${name}</h2>
     <h3 class="moreType">${type}</h3>
