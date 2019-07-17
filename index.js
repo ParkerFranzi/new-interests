@@ -29,7 +29,7 @@ function displayTasteDive(json) {
       `<li><h3 class="name"><a href="JavaScript:void(0);">${json.Similar.Results[i].Name}</a></h3>
       <p class="taste-type">Type: ${json.Similar.Results[i].Type}</p>
       <p class="taste-description">Description: ${json.Similar.Results[i].wTeaser}</p>
-      <p class="taste-wikiurl hidden">Visit the Wiki: <a href="${json.Similar.Results[i].wUrl}">${json.Similar.Results[i].wUrl}</a></p>
+      <p class="taste-wikiurl hidden"><a href="${json.Similar.Results[i].wUrl}">${json.Similar.Results[i].wUrl}</a></p>
       </li>`
     )};
   //display the results section  
@@ -207,7 +207,7 @@ function moreDescription(type, name, desc, wurl) {
 function howToUse() {
   $('#how-to-use').on('click', function(event){
     event.preventDefault();
-    $('#instructions').removeClass('hidden');
+    $('#instructions').toggleClass('hidden');
   })
 }
 //Close Modals
