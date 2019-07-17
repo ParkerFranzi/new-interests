@@ -103,12 +103,14 @@ function displayYouTube(youtubeResponse) {
   $('#youtube-list').empty();
   for (let i = 0; i < youtubeResponse.items.length; i++){
     $('#youtube-list').append(
-      `<li><a target="_blank" href='https://www.youtube.com/watch?v=${youtubeResponse.items[i].id.videoId}'><img src='${youtubeResponse.items[i].snippet.thumbnails.medium.url}'></a>
+      `<li><div class="vid-container">
+        <iframe class="video" src='https://www.youtube.com/embed/${youtubeResponse.items[i].id.videoId}' width="420" height="315" frameborder="0" allowfullscreen></iframe>
+      </div>
       <a target="_blank" href='https://www.youtube.com/watch?v=${youtubeResponse.items[i].id.videoId}'><h3>${youtubeResponse.items[i].snippet.title}</a></h3>
       <p>${youtubeResponse.items[i].snippet.description}</p>
       </li>`
     )};
-    //<iframe src='https://www.youtube.com/watch?v=${youtubeResponse.items[i].id.videoId}' width="420" height="315"></iframe>
+    // <a target="_blank" href='https://www.youtube.com/watch?v=${youtubeResponse.items[i].id.videoId}'><img src='${youtubeResponse.items[i].snippet.thumbnails.medium.url}'></a>
   //display the results section  
   $('#more-info').removeClass('hidden');
 };
