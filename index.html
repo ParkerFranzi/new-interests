@@ -14,34 +14,25 @@
         <div class="container">
             <div class="row">
                 <h2 id="logo-text">New Interests</h2>
-                <a href="JavaScript:void(0);" id="how-to-use">How to use</a>
+                <a class="back-to-search" href="JavaScript:void(0);">Search</a>
             </div>
             
         </div>
     </header>
-    <section id="instructions" class="hidden">
-        <div class="overlay-content container">
-            <!--<a class="close-modal" href="JavaScript:void(0);" aria-roledescription="close modal">X</a>-->
-            <h2>How to use</h2>
-            <p>Enter your favorite author, game, book, movie, podcast, or show.  You can enter in multiple at the same time seperated by a comma.  If one thing shares a title between different types you can also specify type by adding in the type followed by a colon before your search term ex. show:Game of Thrones</p>
-            <p>Once you've got your results, click on the name and you'll see some related news articles and YouTube videos to learn more about them!</p>
-        </div>
-    </section>
     <section id="taste-search">   
-        <div class="container">
-            <h1>Find New Interests</h1>
-            
-            <form id="js-form">
-                <label for="search-term">Enter your favorite author, book, movie, game, tv show, or podcast</label>
-                <input type="text" name="search-term" id="js-search-term" required>
+        <div class="landing-banner">
+            <div class="cover-text">
+                <h2>Enter your favorite</h2>
+                <h2>Author, Book, Movie, TV Show or Podcast</h2>
+                <form id="js-form" autocomplete="off">
+                    <input type="text" name="search-term" id="js-search-term" required>
+                    <div class="row">
+                        <input type="submit" value="New Interests Await!">
+                    </div>
+                </form>
 
-                <label for="max-results">Maximum results to return</label>
-                <input type="number" name="max-results" id="js-max-results" value="10">
-
-                <input type="submit" value="Go!">
-            </form>
-
-            <p id="js-error-message" class="error-message"></p>
+                <p id="js-error-message" class="error-message"></p>
+            </div>
         </div>
     </section>
     <section id="results" class="hidden">
@@ -54,7 +45,6 @@
     <section id="more-info" class="hidden overlay">
         <div class="overlay-content">
             <div class="container">
-                <a class="close-modal button" href="JavaScript:void(0);" aria-roledescription="close modal">Back to Search</a>
                 <div id="more-description">
                 </div>
                 <div class="row">

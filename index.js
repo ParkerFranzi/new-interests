@@ -12,7 +12,6 @@ const newsBase = 'https://newsapi.org/v2/everything';
 function formatQueryParamsNoEncode(params) {
   const queryItems = Object.keys(params)
     .map(key => `${encodeURIComponent(key)}=${params[key]}`)
-    //.map(key => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`)
   return queryItems.join('&');
 }
 function formatQueryParams(params) {
@@ -33,7 +32,11 @@ function displayTasteDive(json) {
       </li>`
     )};
   //display the results section  
-  $('#results').removeClass('hidden');
+  $('#results').show();
+  $('#more-info').hide();
+  $('html, body').animate({
+    scrollTop: $('#results').offset().top - 60
+  });
 };
 
 function displayTasteDiveNotFound(json) {
@@ -43,7 +46,11 @@ function displayTasteDiveNotFound(json) {
   $('#results-list').append(
     `<h3 class="name">${json.Similar.Info[0].Name} is unknown, please try again</h3>`
   );
-  $('#results').removeClass('hidden');
+  $('#results').show();
+  $('#more-info').hide();
+  $('html, body').animate({
+    scrollTop: $('#results').offset().top - 60
+  });
 }
 function displayTasteDiveNoResults(json) {
   $('#results-list').empty();
@@ -52,7 +59,11 @@ function displayTasteDiveNoResults(json) {
   $('#results-list').append(
     `<h3 class="name">${json.Similar.Info[0].Name} has no results, please try another search</h3>`
   );
-  $('#results').removeClass('hidden');
+  $('#results').show();
+  $('#more-info').hide();
+  $('html, body').animate({
+    scrollTop: $('#results').offset().top - 60
+  });
 }
 function getSimilar(query, limit=10, info=1) {
   const params = {
@@ -92,7 +103,7 @@ function watchForm() {
   $('form').submit(event => {
     event.preventDefault();
     const searchTerm = $('#js-search-term').val().split(' ').join('+');
-    const maxResults = $('#js-max-results').val();
+    const maxResults = 45;//$('#js-max-results').val();
     getSimilar(searchTerm, maxResults);
   });
 }
@@ -112,10 +123,9 @@ function displayYouTube(youtubeResponse) {
     )};
     // <a target="_blank" href='https://www.youtube.com/watch?v=${youtubeResponse.items[i].id.videoId}'><img src='${youtubeResponse.items[i].snippet.thumbnails.medium.url}'></a>
   //display the results section  
-  $('#more-info').removeClass('hidden');
 };
 
-function getYouTubeVideos(query, maxResults=10) {
+function getYouTubeVideos(query, maxResults=12) {
   const params = {
     key: youtubeAPI,
     q: query,
@@ -153,10 +163,10 @@ function displayNews(newsResponse) {
       <p>${newsResponse.articles[i].description}</p>
       </li>`
     )};
-  $('#more-info').removeClass('hidden');
+  
 };
 
-function getNews(query, maxResults=10) {
+function getNews(query, maxResults=12) {
   const params = {
     apiKey: newsAPI,
     q: query,
@@ -188,15 +198,16 @@ function watchTasteResults() {
     const tasteType = $(this).parent().find('.taste-type').text();
     const tasteDesc = $(this).parent().find('.taste-description').text();
     const tasteWURL = $(this).parent().find('.taste-wikiurl').text();
-    getYouTubeVideos(tasteName, maxResults);
-    getNews(tasteName, maxResults);
+    getYouTubeVideos(tasteName);
+    getNews(tasteName);
     moreDescription(tasteType, tasteName, tasteDesc, tasteWURL);
+    $(window).scrollTop(0);
+    $('#more-info').show();
   });
 }
 
 function moreDescription(type, name, desc, wurl) {
   $('#more-description').empty();
-  $(window).scrollTop(0);
   $('#more-description').append(
     `<h2 class="moreName">${name}</h2>
     <h3 class="moreType">${type}</h3>
@@ -204,7 +215,7 @@ function moreDescription(type, name, desc, wurl) {
     <p class="moreUrl"><a href="${wurl}">Learn more on Wikipedia</a></p>
     `
   );
-  $('#more-description').removeClass('hidden');
+  $('#more-description').show();
 }
 function howToUse() {
   $('#how-to-use').on('click', function(event){
@@ -212,12 +223,13 @@ function howToUse() {
     $('#instructions').toggleClass('hidden');
   })
 }
+
 //Close Modals
-function closeModal() {
-  $('.close-modal').on('click', function(event) {
+function backToSearch() {
+  $('.back-to-search').on('click', function(event) {
     event.preventDefault();
-    $('#instructions').addClass('hidden');
-    $('#more-info').addClass('hidden');
+    $(window).scrollTop(0);
+    $('#more-info').hide();
   })
 }
 
@@ -225,8 +237,8 @@ function closeModal() {
 function runStart() {
   watchForm();
   watchTasteResults();
-  closeModal();
   howToUse();
+  backToSearch();
 }
 $(runStart);
 
