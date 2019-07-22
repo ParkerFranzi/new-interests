@@ -10,7 +10,7 @@
 </head>
 
 <body>
-    <header class="site-header">
+    <header role="banner" class="site-header">
         <div class="container">
             <div class="row">
                 <h2 id="logo-text">New Interests</h2>
@@ -19,48 +19,49 @@
             
         </div>
     </header>
-    <section id="taste-search">   
-        <div class="landing-banner">
-            <div class="cover-text">
-                <h2>Enter your favorite</h2>
-                <h2>Author, Book, Movie, TV Show or Podcast</h2>
-                <form id="js-form" autocomplete="off">
-                    <input type="text" name="search-term" id="js-search-term" required>
-                    <div class="row">
-                        <input type="submit" value="New Interests Await!">
-                    </div>
-                </form>
+    <main role="main">
+        <section id="taste-search">   
+            <div class="landing-banner">
+                <div class="cover-text">
+                    <h2>Enter your favorite</h2>
+                    <h2>Author, Book, Movie, TV Show or Podcast</h2>
+                    <form id="js-form" autocomplete="off">
+                        <input type="text" name="search-term" id="js-search-term" required>
+                        <div class="row">
+                            <input type="submit" value="New Interests Await!">
+                        </div>
+                    </form>
 
-                <p id="js-error-message" class="error-message"></p>
+                    <p id="js-error-message" class="error-message"></p>
+                </div>
             </div>
-        </div>
-    </section>
-    <section id="results" class="hidden">
-        <div class="container">
-            <h2>Search results</h2>
-            <ul id="results-list">
-            </ul>
-        </div>
-    </section>
-    <section id="more-info" class="hidden overlay">
-        <div class="overlay-content">
+        </section>
+        <section id="results" class="hidden">
             <div class="container">
-                <div id="more-description">
-                </div>
-                <div class="row">
-                    <h2>YouTube Videos</h2>
-                    <ul id="youtube-list">
-                    </ul>
-                </div>
-                <div class="row">
-                    <h2>Relevant News</h2>
-                    <ul id="news-list">
-                    </ul>
+                <h2>Search results</h2>
+                <ul id="results-list">
+                </ul>
+            </div>
+        </section>
+        <section id="more-info" class="hidden overlay">
+            <div class="overlay-content">
+                <div class="container">
+                    <div id="more-description">
+                    </div>
+                    <div class="row">
+                        <h2>YouTube Videos</h2>
+                        <ul id="youtube-list">
+                        </ul>
+                    </div>
+                    <div class="row">
+                        <h2>Relevant News</h2>
+                        <ul id="news-list">
+                        </ul>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
-
+        </section>
+    </main>
     <script src="index.js"></script>
 </body>
 </html>

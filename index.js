@@ -30,8 +30,7 @@ function displayTasteDive(json) {
       <p class="taste-description">Description: ${json.Similar.Results[i].wTeaser}</p>
       <p class="taste-wikiurl hidden"><a href="${json.Similar.Results[i].wUrl}">${json.Similar.Results[i].wUrl}</a></p>
       </li>`
-    )};
-  //display the results section  
+    )}; 
   $('#results').show();
   $('#more-info').hide();
   $('html, body').animate({
@@ -74,12 +73,8 @@ function getSimilar(query, limit=10, info=1) {
   };
   const queryString = formatQueryParamsNoEncode(params);
   const tasteURL = tasteBase + '?' + queryString + '&callback=handleRequest' ;
-
-  console.log(tasteURL);
-
   const makeAjaxRequest = () => {
     window.handleRequest = x => {
-      console.log(x.Similar.Info[0].Type);
       if (x.Similar.Info[0].Type === "unknown") {
         displayTasteDiveNotFound(x);
       }
@@ -90,7 +85,6 @@ function getSimilar(query, limit=10, info=1) {
         displayTasteDive(x);
       }
     }
-    
     const tag = document.createElement("script");
     tag.src = tasteURL;
     document.getElementsByTagName("head")[0].appendChild(tag);
@@ -110,7 +104,6 @@ function watchForm() {
 
 //YouTube
 function displayYouTube(youtubeResponse) {
-  console.log(youtubeResponse);
   $('#youtube-list').empty();
   for (let i = 0; i < youtubeResponse.items.length; i++){
     $('#youtube-list').append(
@@ -121,8 +114,6 @@ function displayYouTube(youtubeResponse) {
       <p>${youtubeResponse.items[i].snippet.description}</p>
       </li>`
     )};
-    // <a target="_blank" href='https://www.youtube.com/watch?v=${youtubeResponse.items[i].id.videoId}'><img src='${youtubeResponse.items[i].snippet.thumbnails.medium.url}'></a>
-  //display the results section  
 };
 
 function getYouTubeVideos(query, maxResults=12) {
@@ -135,9 +126,6 @@ function getYouTubeVideos(query, maxResults=12) {
   };
   const youtubeQuery = formatQueryParams(params);
   const youtubeURL = youtubeBase + '?' + youtubeQuery;
-
-  console.log(youtubeURL);
-
   fetch(youtubeURL)
     .then(response => {
       if (response.ok) {
@@ -152,9 +140,7 @@ function getYouTubeVideos(query, maxResults=12) {
 }
 //News API
 function displayNews(newsResponse) {
-  console.log(newsResponse);
   $('#news-list').empty();
-
   for (let i = 0; i < newsResponse.articles.length; i++){
     $('#news-list').append(
       `<li><img src='${newsResponse.articles[i].urlToImage}' />
@@ -175,9 +161,6 @@ function getNews(query, maxResults=12) {
   };
   const newsQuery = formatQueryParams(params);
   const newsURL = newsBase + '?' + newsQuery;
-
-  console.log(newsURL);
-
   fetch(newsURL)
     .then(response => {
       if (response.ok) {
