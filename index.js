@@ -1,6 +1,7 @@
 const tastediveAPI = '339797-FindNewI-4PDNXAAE';
 const newsAPI = '3529a7c1a7d54e3587f38460b8114c9a';
-const youtubeAPI = 'AIzaSyD2yWjYB3R7TL60CaSPPOFynTFIPzwnDzA';
+const youtubeAPI = 'AIzaSyD0HiEwAcBVYguvb9bWt-x9um1BcaX2OoA';
+
 
 'use strict';
 
