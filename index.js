@@ -161,7 +161,7 @@ function getNews(query, maxResults=12) {
     pageSize: maxResults,
   };
   const newsQuery = formatQueryParams(params);
-  const newsURL = newsBase + '?' + newsQuery;
+  const newsURL = 'https://cors-anywhere.herokuapp.com/' + newsBase + '?' + newsQuery;
   fetch(newsURL)
     .then(response => {
       if (response.ok) {
