@@ -1,5 +1,6 @@
 const tastediveAPI = '339797-FindNewI-4PDNXAAE';
 const newsAPI = '3529a7c1a7d54e3587f38460b8114c9a';
+const gnewsAPI = '6271c2a5378e368bcd5f45a8ded5122e';
 const youtubeAPI = 'AIzaSyAr-5g5fYuHaOGycfuvgxelvSmPDFkFYoQ';
 
 
@@ -9,6 +10,7 @@ const youtubeAPI = 'AIzaSyAr-5g5fYuHaOGycfuvgxelvSmPDFkFYoQ';
 const tasteBase = 'https://tastedive.com/api/similar';
 const youtubeBase = 'https://www.googleapis.com/youtube/v3/search';
 const newsBase = 'https://newsapi.org/v2/everything';
+const gnewsBase = 'https://gnews.io/api/v3/search'
 
 function formatQueryParamsNoEncode(params) {
   const queryItems = Object.keys(params)
@@ -144,9 +146,9 @@ function displayNews(newsResponse) {
   $('#news-list').empty();
   for (let i = 0; i < newsResponse.articles.length; i++){
     $('#news-list').append(
-      `<li><img src='${newsResponse.articles[i].urlToImage}' />
+      `<li><img src='${newsResponse.articles[i].image}' />
       <h3><a href="${newsResponse.articles[i].url}" target="_blank">${newsResponse.articles[i].title}</a></h3>
-      <p>${newsResponse.articles[i].author}</p>
+      <p>${newsResponse.articles[i].source.name}</p>
       <p>${newsResponse.articles[i].description}</p>
       </li>`
     )};
@@ -155,13 +157,12 @@ function displayNews(newsResponse) {
 
 function getNews(query, maxResults=12) {
   const params = {
-    apiKey: newsAPI,
     q: query,
-    sortBy: 'relevancy',
-    pageSize: maxResults,
+    max: maxResults,
+    image: 'required'
   };
   const newsQuery = formatQueryParams(params);
-  const newsURL = 'https://cors-anywhere.herokuapp.com/' + newsBase + '?' + newsQuery;
+  const newsURL = gnewsBase + '?' + newsQuery + '&token=' + gnewsAPI;
   fetch(newsURL)
     .then(response => {
       if (response.ok) {
